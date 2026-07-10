@@ -33,7 +33,105 @@ sudo ./setup_anti_probe.sh
 sudo ./setup_anti_probe.sh
 ```
 
-نصب با لیمیت دلخواه
+# نصب با لیمیت دلخواه
+
+
+### ۱. لیمیت ۱۰ پکت در ثانیه (حساس) - پیشنهاد اکثر کاربران
+
+```
+sudo ./setup_anti_probe.sh --rate 10 --burst 20
+```
+
+توضیح کامل:
+
+Rate = 10: اگر از یک آی‌پی بیش از ۱۰ پکت SYN در هر ثانیه ارسال شود، آن آی‌پی به صورت خودکار بلاک می‌شود.
+Burst = 20: اجازه می‌دهد تا ۲۰ پکت به صورت ناگهانی (در یک لحظه) ارسال شود بدون اینکه بلاک شود. بعد از این مقدار، لیمیت اعمال می‌شود.
+معادل در دقیقه: تقریباً ۶۰۰ درخواست SYN در دقیقه.
+
+این تنظیم برای چه سرورهایی مناسب است؟
+
+مناسب برای: اکثر سرورهای معمولی ایرانی، وب‌سایت‌های متوسط، سرورهای شخصی و VPSها.
+مزایا: تعادل خوب بین امنیت و راحتی. احتمال بلاک شدن اشتباه (False Positive) کم است.
+معایب: اگر ترافیک legitimate بالایی داشته باشی (مثل Crawlerهای گوگل یا کاربران زیاد)، ممکن است بعضی آی‌پی‌ها به اشتباه بلاک شوند.
+
+----
+
+### ۲. لیمیت خیلی حساس (۷ پکت در ثانیه)
+```
+sudo ./setup_anti_probe.sh --rate 7 --burst 15
+```
+Rate = 7
+: اگر از یک آی‌پی بیش از ۷ پکت SYN در هر ثانیه ارسال شود، آن آی‌پی به صورت خودکار بلاک می‌شود.
+Burst = 15
+: فقط تا ۱۵ پکت به صورت ناگهانی (burst) اجازه عبور دارد. بعد از این مقدار، لیمیت فعال می‌شود.
+معادل در دقیقه
+: تقریباً ۴۲۰ درخواست SYN در دقیقه.
+
+این تنظیم برای چه سرورهایی مناسب است؟
+
+سرورهایی که ترافیک بسیار کمی دارند (کمتر از ۱۰۰ کاربر همزمان)
+سرورهای شخصی یا سرورهای تست
+محیط‌هایی که امنیت بسیار بالا اولویت دارد (مثل سرورهای حاوی اطلاعات حساس)
+سرورهایی که تحت حمله شدید و مداوم قرار دارند
+
+
+مزایا:
+
+امنیت بسیار بالا
+اکثر اسکنرها، بات‌ها و ابزارهای probing خیلی سریع بلاک می‌شوند
+
+معایب:
+
+احتمال بلاک شدن اشتباه (False Positive) بیشتر است
+ممکن است کاربران عادی هنگام باز کردن چند تب یا اتصال از موبایل با اینترنت ضعیف، به اشتباه بلاک شوند---
+
+مقایسه سریع:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+تنظیماتپکت در ثانیهپکت در دقیقهسطح حساسیتپیشنهاد برای--rate 15 (پیش‌فرض)۱۵۹۰۰متوسطاکثر کاربران--rate 10۱۰۶۰۰حساسپیشنهاد اصلی--rate 7۷۴۲۰خیلی حساسسرورهای کم‌ترافیک
+
+توصیه نهایی من:
+
+اول با --rate 10 --burst 20 نصب کن.
+اگر دیدی خیلی آی‌پی بلاک می‌شود، لیمیت را به ۱۲ یا ۱۳ افزایش بده.
+اگر تحت حمله شدید هستی، به ۷ یا ۸ پایین بیاور.
+-----
+
+
+
+
+
 
 
 
@@ -82,19 +180,23 @@ sudo ./setup_anti_probe.sh -U        # حذف کامل
 ```
 
 
-## Complete Command List
+---
 
-| Argument | Description | Example |
-|:---------|:------------|:--------|
-| `-h`, `--help` | Display the complete help menu | `sudo ./setup_anti_probe.sh -h` |
-| `-s`, `--status` | Show blocked IP addresses and their remaining ban time | `sudo ./setup_anti_probe.sh -s` |
-| `-w`, `--whitelist` | Display the whitelist | `sudo ./setup_anti_probe.sh -w` |
-| `-l`, `--list-all` | Display all active nftables rules | `sudo ./setup_anti_probe.sh -l` |
-| `-a`, `--allow <IP>` | Add an IP address to the permanent whitelist | `sudo ./setup_anti_probe.sh -a 185.123.45.67` |
-| `-r`, `--remove <IP>` | Remove an IP address from the whitelist | `sudo ./setup_anti_probe.sh -r 185.123.45.67` |
-| `-b`, `--ban <IP>` | Manually ban an IP address for 24 hours | `sudo ./setup_anti_probe.sh -b 198.51.100.23` |
-| `-u`, `--unban <IP>` | Remove an IP address from the blacklist (Unban) | `sudo ./setup_anti_probe.sh -u 198.51.100.23` |
-| `-d`, `--disable` | Temporarily disable the firewall by flushing all rules | `sudo ./setup_anti_probe.sh -d` |
-| `-U`, `--uninstall` | Completely uninstall the firewall and remove its configuration | `sudo ./setup_anti_probe.sh -U` |
-| `--rate <number>` | Set the SYN packet rate limit (packets per second) | `sudo ./setup_anti_probe.sh --rate 10` |
-| `--burst <number>` | Set the allowed SYN burst size | `sudo ./setup_anti_probe.sh --rate 10 --burst 20` |
+## لیست کامل دستورات
+
+| آرگومان                  | توضیحات                                              | مثال استفاده |
+|-------------------------|-----------------------------------------------------|--------------|
+| `-h, --help`            | نمایش منوی کامل کمک                                 | `sudo ./setup_anti_probe.sh -h` |
+| `-s, --status`          | نمایش آی‌پی‌های بلاک شده و زمان باقی‌مانده         | `sudo ./setup_anti_probe.sh -s` |
+| `-w, --whitelist`       | نمایش لیست سفید (Whitelist)                         | `sudo ./setup_anti_probe.sh -w` |
+| `-l, --list-all`        | نمایش کامل قوانین فعال nftables                     | `sudo ./setup_anti_probe.sh -l` |
+| `-a, --allow <IP>`      | اضافه کردن آی‌پی به **Whitelist دائمی**             | `sudo ./setup_anti_probe.sh -a 185.123.45.67` |
+| `-r, --remove <IP>`     | حذف آی‌پی از Whitelist                              | `sudo ./setup_anti_probe.sh -r 185.123.45.67` |
+| `-b, --ban <IP>`        | بلاک دستی آی‌پی برای ۲۴ ساعت                         | `sudo ./setup_anti_probe.sh -b 198.51.100.23` |
+| `-u, --unban <IP>`      | آنبن کردن (حذف از blacklist)                        | `sudo ./setup_anti_probe.sh -u 198.51.100.23` |
+| `-d, --disable`         | غیرفعال کردن موقت فایروال (Flush تمام قوانین)     | `sudo ./setup_anti_probe.sh -d` |
+| `-U, --uninstall`       | حذف کامل فایروال و فایل تنظیمات                    | `sudo ./setup_anti_probe.sh -U` |
+| `--rate <number>`       | تنظیم لیمیت بلاک (تعداد پکت SYN در ثانیه)           | `sudo ./setup_anti_probe.sh --rate 10` |
+| `--burst <number>`      | تنظیم تحمل Burst (تعداد پکت ناگهانی)               | `sudo ./setup_anti_probe.sh --rate 10 --burst 20` |
+
+---
