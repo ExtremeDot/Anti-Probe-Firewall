@@ -140,17 +140,17 @@ Burst = 15
 
 
 
-# حساس‌تر (۱۰ پکت در ثانیه)
+### حساس‌تر (۱۰ پکت در ثانیه)
 ```
 sudo ./setup_anti_probe.sh --rate 10 --burst 20
 ```
 
-# خیلی حساس
+### خیلی حساس
 ```
 sudo ./setup_anti_probe.sh --rate 7 --burst 15
 ```
 
-# برای سرورهای پرترافیک
+### برای سرورهای پرترافیک
 
 ```
 sudo ./setup_anti_probe.sh --rate 25 --burst 40
@@ -159,10 +159,10 @@ sudo ./setup_anti_probe.sh --rate 25 --burst 40
 -----
 
 
-# مدیریت Whitelist:
+### مدیریت Whitelist:
 
 
-# اضافه کردن آی‌پی مهم
+### اضافه کردن آی‌پی مهم
 ```
 sudo ./setup_anti_probe.sh -a 5.202.10.50     # ایرانسل
 sudo ./setup_anti_probe.sh -a 79.127.127.10   # همراه اول
@@ -170,14 +170,14 @@ sudo ./setup_anti_probe.sh -a YOUR_IP         # آی‌پی خودتان
 ```
 
 
-# مدیریت Blacklist:
+### مدیریت Blacklist:
 ```
 sudo ./setup_anti_probe.sh -b 203.0.113.55    # بلاک دستی
 sudo ./setup_anti_probe.sh -s                 # چک کردن لیست بلاک
 sudo ./setup_anti_probe.sh -u 203.0.113.55    # آنبن
 ```
 
-# غیرفعال‌سازی:
+### غیرفعال‌سازی:
 
 ```
 sudo ./setup_anti_probe.sh -d        # غیرفعال موقت
@@ -187,7 +187,7 @@ sudo ./setup_anti_probe.sh -U        # حذف کامل
 
 ---
 
-## لیست کامل دستورات
+### لیست کامل دستورات
 
 | آرگومان                  | توضیحات                                              | مثال استفاده |
 |-------------------------|-----------------------------------------------------|--------------|
