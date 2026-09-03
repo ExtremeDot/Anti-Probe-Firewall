@@ -27,7 +27,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/ExtremeDot/Anti-Probe-Firewal
 ##### offline
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/ExtremeDot/Anti-Probe-Firewall/main/setup_anti_probe.sh
+wget -qO setup_anti_probe.sh https://raw.githubusercontent.com/ExtremeDot/Anti-Probe-Firewall/main/setup_anti_probe.sh
 chmod +x setup_anti_probe.sh
 sudo ./setup_anti_probe.sh
 ```
