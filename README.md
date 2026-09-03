@@ -18,8 +18,16 @@
 ---
 
 ## نصب
+##### Online 
+
+```
+bash <(wget -qO- https://raw.githubusercontent.com/ExtremeDot/Anti-Probe-Firewall/main/setup_anti_probe.sh)
+```
+
+##### offline
 
 ```bash
+wget -qO- https://raw.githubusercontent.com/ExtremeDot/Anti-Probe-Firewall/main/setup_anti_probe.sh
 chmod +x setup_anti_probe.sh
 sudo ./setup_anti_probe.sh
 ```
